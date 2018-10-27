@@ -5,12 +5,10 @@
   ng new owf-widget
 
 ### Add 3rd party libraries in assets/vendor folder
-  mkdir -p src/assets/vendor
-  
+  mkdir -p src/assets/vendor\  
   --> examples of libraries: date.format.js, jquery-3.2.1.js, jquery-3.2.1.min.js, 
       jquery-3.2.1.min.map, jszip.min.js, owf-widget-debug.js, owf-widget-min.js, 
-      underscore-min.js
-      
+      underscore-min.js\      
   Note: jquery can be added in the angular package.json also
   
 
