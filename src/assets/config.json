@@ -1,0 +1,10 @@
+{
+  "version": "1.0.b12",
+  "buildDate": "2018/11/12",
+  "urls": {
+    "OWFServer": "service 1",
+    "identityServer": "service 2",
+    "applicationServer": "service 3"
+  },
+  "roles": ["role1", "role2"]
+}

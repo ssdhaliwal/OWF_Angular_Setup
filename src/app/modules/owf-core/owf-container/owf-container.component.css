@@ -1,0 +1,21 @@
+:host {
+    align-items: center;
+}
+
+.row {
+    width: 100%;
+    margin-right: unset;
+    margin-left: unset;
+}
+
+#cards {
+    float: left;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.card {
+    width: 33%;
+    padding: 1px;
+}

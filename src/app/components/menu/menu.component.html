@@ -1,0 +1,6 @@
+<p-menubar [model]="menuItems.items" [autoDisplay]="false">
+  <div>
+      <input type="text" #search placeholder="{{searchText}}" (keyup.enter)="onSearchEnter(search.value)">
+      <button pButton icon="fa fa-sign-out" style="margin-left:.25em"></button>
+  </div>
+</p-menubar>
