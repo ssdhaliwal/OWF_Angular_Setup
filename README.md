@@ -61,3 +61,18 @@
 ```
   ng serve --ssl true --ssl-cert server.crt --ssl-key server.key
 ```
+# history of changes
+18Nov/2018
+- updated primeng card component css to allow wraping of cards within container
+- added bootstrap grid with css update for rendering
+- added routing to support lazy loading using children
+- updated menu items to link to routing via common containers for each top menu item
+- added support for outlets to allow child items of top menu item to be independent and support on demand loading
+- updated config service to use model and updated display of to use model vice any
+- downgraded bootstrap to v3 since v4 did not work correctly using themes
+- dependencies: added lodash
+
+27Oct/2018
+- initial release
+- basic widget to test integration and start learning angular/typescript
+- dependencies - primeng, bootstrap, angular, typescript, owf, underscore.
