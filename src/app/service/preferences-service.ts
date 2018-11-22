@@ -5,23 +5,23 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import * as _ from 'lodash';
 
-import { AttributeModel } from '../models/attribute-model';
+import { PreferencesModel, Preference } from '../models/preferences-model';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
 @Injectable()
-export class AttributeService {
+export class PreferencesService {
   private baseUrl = 'assets/attributes.json';
 
   constructor(private http: HttpClient) {
 
   }
 
-  getAttribute() {
+  getPreferences(namespace: string, category: string) {
     let values = this.http
-      .get<AttributeModel[]>(this.baseUrl, { responseType: 'json' })
+      .get<PreferencesModel[]>(this.baseUrl, { responseType: 'json' })
       .pipe(
         map(data => _.values(data)),
         catchError(this.handleError('getAttribute', [])),

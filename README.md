@@ -62,6 +62,10 @@
   ng serve --ssl true --ssl-cert server.crt --ssl-key server.key
 ```
 # history of changes
+21Nov/2018
+- separated the owf-core and user-core into separate modules
+- updated owf/info to display the info in cards
+
 18Nov/2018
 - updated primeng card component css to allow wraping of cards within container
 - added bootstrap grid with css update for rendering

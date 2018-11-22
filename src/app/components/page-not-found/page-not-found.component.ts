@@ -10,9 +10,7 @@ export class PageNotFoundComponent implements OnInit {
   message: string = '';
 
   constructor(private route: ActivatedRoute) {
-    console.log('9001-01');
     this.route.params.subscribe(params => {
-      console.log('9001-02', params);
       if (params['type']) {
         this.message = params['message'];
       }

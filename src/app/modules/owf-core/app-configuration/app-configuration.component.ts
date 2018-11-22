@@ -21,7 +21,7 @@ export class AppConfigurationComponent implements OnInit {
         this.configModel = configModel;
         this.configReady = true;
 
-        console.log('Service completed: ', configModel);
+        console.log('Config Service completed: ', configModel);
       });
   }
 }
