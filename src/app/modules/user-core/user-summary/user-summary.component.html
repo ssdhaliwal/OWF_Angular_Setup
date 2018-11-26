@@ -1,3 +1,22 @@
-<p>
-  user-summary works!
-</p>
+<span *ngIf="userReady">
+  <p-fieldset legend="User Information" [toggleable]="true">
+    <div id="cards">
+      <p-card class="card" header="Simple Card">
+        Success: {{summary.success}}
+      </p-card>
+      <p-card class="card" header="Simple Card">
+        Count: {{summary.results}}
+      </p-card>
+    </div>
+  </p-fieldset>
+  <p-fieldset legend="User Information" [toggleable]="true">
+      <div id="cards">
+      <p-card class="card" header="Simple Card" *ngFor="let element of summary.data; let i = index">  
+        Total Stacks: {{element.totalStacks}} <br/>
+        Total Groups: {{element.totalGroups}} <br/>
+        Total Widgets: {{element.totalWidgets}} <br/>
+        Total Dashboards: {{element.totalDashboards}}
+      </p-card>
+    </div>
+  </p-fieldset>
+</span>

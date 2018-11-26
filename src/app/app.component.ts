@@ -45,7 +45,7 @@ export class AppComponent implements OnInit {
                 outlets: {
                   primary: ['message', 'notice', { message: 'Displaying user information!' }],
                   owfoutlet: [''],
-                  useroutlet: ['user', '1', 'info']
+                  useroutlet: ['user', 'args', 'info']
                 }
               }]);
             } else
@@ -55,7 +55,7 @@ export class AppComponent implements OnInit {
                   outlets: {
                     primary: ['message', 'notice', { message: 'Displaying user UUID information!' }],
                     owfoutlet: [''],
-                    useroutlet: ['user', '1', 'uuid']
+                    useroutlet: ['user', 'args', 'uuid']
                   }
                 }]);
               } else
@@ -65,7 +65,7 @@ export class AppComponent implements OnInit {
                     outlets: {
                       primary: ['message', 'notice', { message: 'Displaying user summary information!' }],
                       owfoutlet: [''],
-                      useroutlet: ['user', '1', 'summary']
+                      useroutlet: ['user', 'args', 'summary']
                     }
                   }]);
                 } else
@@ -75,7 +75,7 @@ export class AppComponent implements OnInit {
                       outlets: {
                         primary: ['message', 'notice', { message: 'Displaying user dashboards information!' }],
                         owfoutlet: [''],
-                        useroutlet: ['user', '1', 'dashboards']
+                        useroutlet: ['user', 'args', 'dashboards']
                       }
                     }]);
                   } else
@@ -85,7 +85,7 @@ export class AppComponent implements OnInit {
                         outlets: {
                           primary: ['message', 'notice', { message: 'Displaying user groups information!' }],
                           owfoutlet: [''],
-                          useroutlet: ['user', '1', 'groups']
+                          useroutlet: ['user', 'args', 'groups']
                         }
                       }]);
                     } else
@@ -95,7 +95,7 @@ export class AppComponent implements OnInit {
                           outlets: {
                             primary: ['message', 'notice', { message: 'Displaying user widgets information!' }],
                             owfoutlet: [''],
-                            useroutlet: ['user', '1', 'widgets']
+                            useroutlet: ['user', 'args', 'widgets']
                           }
                         }]);
                       } else {

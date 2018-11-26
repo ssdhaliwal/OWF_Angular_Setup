@@ -27,7 +27,7 @@
 </div>
 <p-fieldset legend="OWF Container Information" [toggleable]="true">
   <div id="cards">
-    <p-card class="card" header="Simple Card" *ngFor="let element of containerModel.attributes | keyvalue; let i = index">
+    <p-card id="owfcard" class="card" header="Simple Card" *ngFor="let element of containerModel.attributes | keyvalue; let i = index">
       {{i + 1}}. {{element.value.key}} <br/> {{element.value.value}}
     </p-card>
   </div>

@@ -4,12 +4,12 @@
 <span *ngIf="configReady">
   <ul>
     <li>
-      {{configModel.version}} / {{configModel.buildDate}}
+      {{config.version}} / {{config.buildDate}}
     </li>
     <li>
       Urls:
       <ul>
-        <li *ngFor="let element of configModel.urls | keyvalue; let i = index">
+        <li *ngFor="let element of config.urls | keyvalue; let i = index">
           {{i}}. {{element.key}} / {{element.value}}
         </li>
       </ul>
@@ -17,7 +17,7 @@
     <li>
       Roles:
       <ul>
-        <li *ngFor="let element of configModel.roles; let i = index">
+        <li *ngFor="let element of config.roles; let i = index">
           {{i + 1}}. {{element}}
         </li>
       </ul>

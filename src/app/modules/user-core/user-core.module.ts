@@ -7,6 +7,8 @@ import { TabViewModule } from 'primeng/tabview';
 import { CardModule } from 'primeng/card';
 import { PanelModule } from 'primeng/panel';
 
+import { SharedServicesModule } from '../shared-services.module';
+
 import { UserCoreComponent } from '../user-core/user-core.component';
 import { UserInformationComponent } from '../user-core/user-information/user-information.component';
 import { UserUUIDComponent } from '../user-core/user-uuid/user-uuid.component';
@@ -62,7 +64,8 @@ const appRoutes: Routes = [
     FieldsetModule,
     TabViewModule,
     CardModule,
-    PanelModule
+    PanelModule,
+    SharedServicesModule
   ],
   exports: [UserCoreComponent,
     UserInformationComponent,

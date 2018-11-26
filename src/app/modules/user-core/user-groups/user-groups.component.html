@@ -1,3 +1,26 @@
-<p>
-  user-groups works!
-</p>
+<span *ngIf="userReady">
+  <p-fieldset legend="User Information" [toggleable]="true">
+    <div id="cards">
+      <p-card class="card" header="Simple Card">
+        Count: {{groups.results}}
+      </p-card>
+    </div>
+  </p-fieldset>
+  <p-fieldset legend="User Information" [toggleable]="true">
+      <div id="cards">
+      <p-card class="card" header="Simple Card" *ngFor="let element of groups.data; let i = index">  
+        Stack Default: {{element.stackDefault}} <br/>
+        Total Stacks: {{element.totalStacks}} <br/>
+        Status: {{element.status}} <br/>
+        Total Users: {{element.totalUsers}} <br/>
+        Id: {{element.id}} <br/>
+        Description: {{element.description}} <br/>
+        Total Widgets: {{element.totalWidgets}} <br/>
+        Email: {{element.email}} <br/>
+        Name: {{element.name}} <br/>
+        Automatic: {{element.automatic}} <br/>
+        DisplayName: {{element.displayName}} <br/>
+      </p-card>
+    </div>
+  </p-fieldset>
+</span>

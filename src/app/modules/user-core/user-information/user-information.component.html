@@ -1,3 +1,18 @@
-<p>
-  user-information works!
-</p>
+<span *ngIf="userReady">
+  <p-fieldset legend="User Information" [toggleable]="true">
+    <div id="cards">
+      <p-card class="card" header="Simple Card">
+        USER: {{user.user}}
+      </p-card>
+      <p-card class="card" header="Simple Card">
+        Previous Login: {{user.prevLogin}}
+      </p-card>
+      <p-card class="card" header="Simple Card">
+        ID: {{user.id}}
+      </p-card>
+      <p-card class="card" header="Simple Card">
+        EMail: {{user.email}}
+      </p-card>
+    </div>
+  </p-fieldset>
+</span>

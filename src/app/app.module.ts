@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 
+import { GrowlModule, MessageModule, MessagesModule } from 'primeng/primeng';
 import { ButtonModule } from 'primeng/primeng';
 import { MenubarModule } from 'primeng/menubar';
 
@@ -14,6 +15,8 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 
 import { OwfCoreModule } from './modules/owf-core/owf-core.module';
 import { UserCoreModule } from './modules/user-core/user-core.module';
+
+import { SharedServicesModule } from './modules/shared-services.module';
 
 const appRoutes: Routes = [
   {
@@ -44,8 +47,13 @@ const appRoutes: Routes = [
     RouterModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    GrowlModule,
+    MessageModule,
+    MessagesModule,
     MenubarModule,
-    ButtonModule],
+    ButtonModule,
+    SharedServicesModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

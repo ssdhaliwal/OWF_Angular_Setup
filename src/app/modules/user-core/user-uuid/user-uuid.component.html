@@ -1,3 +1,9 @@
-<p>
-  user-uuid works!
-</p>
+<span *ngIf="userReady">
+  <p-fieldset legend="User Information" [toggleable]="true">
+    <div id="cards">
+      <p-card class="card" header="Simple Card">
+        UUID: {{uuid}}
+      </p-card>
+    </div>
+  </p-fieldset>
+</span>

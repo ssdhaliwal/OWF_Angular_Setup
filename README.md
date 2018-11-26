@@ -62,6 +62,11 @@
   ng serve --ssl true --ssl-cert server.crt --ssl-key server.key
 ```
 # history of changes
+25Nov/2018
+- create singleton services for core items using shared-services.module.ts
+- working on owf function calls whcih use callbacks using timers (not optimal)
+- dashboard and widget components are in work
+
 21Nov/2018
 - separated the owf-core and user-core into separate modules
 - updated owf/info to display the info in cards

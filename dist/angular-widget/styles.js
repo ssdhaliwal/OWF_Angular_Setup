@@ -84,7 +84,7 @@ module.exports = [[module.i, "/*!\n * Bootswatch v4.1.3\n * Homepage: https://bo
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = [[module.i, "/* You can add global styles to this file, and also import other style files */\n\nhtml, body { height: 95%; }\n\nbody { margin: 0; font-family: Roboto, \"Helvetica Neue\", sans-serif; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9zdHlsZXMuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLCtFQUErRTs7QUFFL0UsYUFBYSxZQUFZLEVBQUU7O0FBQzNCLE9BQU8sVUFBVSxDQUFDLGtEQUFrRCxFQUFFIiwiZmlsZSI6InNyYy9zdHlsZXMuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLyogWW91IGNhbiBhZGQgZ2xvYmFsIHN0eWxlcyB0byB0aGlzIGZpbGUsIGFuZCBhbHNvIGltcG9ydCBvdGhlciBzdHlsZSBmaWxlcyAqL1xuXG5odG1sLCBib2R5IHsgaGVpZ2h0OiA5NSU7IH1cbmJvZHkgeyBtYXJnaW46IDA7IGZvbnQtZmFtaWx5OiBSb2JvdG8sIFwiSGVsdmV0aWNhIE5ldWVcIiwgc2Fucy1zZXJpZjsgfVxuIl19 */", '', '']]
+module.exports = [[module.i, "/* You can add global styles to this file, and also import other style files */\n\nhtml,\nbody {\n  height: 95%;\n}\n\nbody {\n  margin: 0;\n  font-family: Roboto, \"Helvetica Neue\", sans-serif;\n}\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9zdHlsZXMuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLCtFQUErRTs7QUFFL0U7O0VBRUUsWUFBWTtDQUNiOztBQUVEO0VBQ0UsVUFBVTtFQUNWLGtEQUFrRDtDQUNuRCIsImZpbGUiOiJzcmMvc3R5bGVzLmNzcyIsInNvdXJjZXNDb250ZW50IjpbIi8qIFlvdSBjYW4gYWRkIGdsb2JhbCBzdHlsZXMgdG8gdGhpcyBmaWxlLCBhbmQgYWxzbyBpbXBvcnQgb3RoZXIgc3R5bGUgZmlsZXMgKi9cblxuaHRtbCxcbmJvZHkge1xuICBoZWlnaHQ6IDk1JTtcbn1cblxuYm9keSB7XG4gIG1hcmdpbjogMDtcbiAgZm9udC1mYW1pbHk6IFJvYm90bywgXCJIZWx2ZXRpY2EgTmV1ZVwiLCBzYW5zLXNlcmlmO1xufVxuIl19 */", '', '']]
 
 /***/ }),
 
@@ -837,7 +837,7 @@ if(false) {}
 
 /***/ 2:
 /*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./src/styles.css ./node_modules/font-awesome/css/font-awesome.min.css ./node_modules/primeicons/primeicons.css ./node_modules/primeng/resources/themes/luna-blue/theme.css ./node_modules/primeng/resources/primeng.min.css ./src/assets/themes/bootstrap.cerulean.min.css ./node_modules/bootstrap/dist/css/bootstrap.min.css ./node_modules/bootstrap/dist/css/bootstrap-theme.min.css ***!
+  !*** multi ./src/styles.css ./node_modules/font-awesome/css/font-awesome.min.css ./node_modules/primeicons/primeicons.css ./node_modules/primeng/resources/themes/luna-blue/theme.css ./node_modules/primeng/resources/primeng.min.css ./node_modules/bootstrap/dist/css/bootstrap.min.css ./node_modules/bootstrap/dist/css/bootstrap-theme.min.css ./src/assets/themes/bootstrap.cerulean.min.css ***!
   \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -847,9 +847,9 @@ __webpack_require__(/*! /home/development/opt/projects/angular/angular-widget/no
 __webpack_require__(/*! /home/development/opt/projects/angular/angular-widget/node_modules/primeicons/primeicons.css */"./node_modules/primeicons/primeicons.css");
 __webpack_require__(/*! /home/development/opt/projects/angular/angular-widget/node_modules/primeng/resources/themes/luna-blue/theme.css */"./node_modules/primeng/resources/themes/luna-blue/theme.css");
 __webpack_require__(/*! /home/development/opt/projects/angular/angular-widget/node_modules/primeng/resources/primeng.min.css */"./node_modules/primeng/resources/primeng.min.css");
-__webpack_require__(/*! /home/development/opt/projects/angular/angular-widget/src/assets/themes/bootstrap.cerulean.min.css */"./src/assets/themes/bootstrap.cerulean.min.css");
 __webpack_require__(/*! /home/development/opt/projects/angular/angular-widget/node_modules/bootstrap/dist/css/bootstrap.min.css */"./node_modules/bootstrap/dist/css/bootstrap.min.css");
-module.exports = __webpack_require__(/*! /home/development/opt/projects/angular/angular-widget/node_modules/bootstrap/dist/css/bootstrap-theme.min.css */"./node_modules/bootstrap/dist/css/bootstrap-theme.min.css");
+__webpack_require__(/*! /home/development/opt/projects/angular/angular-widget/node_modules/bootstrap/dist/css/bootstrap-theme.min.css */"./node_modules/bootstrap/dist/css/bootstrap-theme.min.css");
+module.exports = __webpack_require__(/*! /home/development/opt/projects/angular/angular-widget/src/assets/themes/bootstrap.cerulean.min.css */"./src/assets/themes/bootstrap.cerulean.min.css");
 
 
 /***/ })

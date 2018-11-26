@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, EMPTY } from 'rxjs';
 import { catchError, map, filter, switchMap, tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -11,22 +11,26 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class ConfigService {
-  config: Observable<ConfigModel>;
+  config: Observable<ConfigModel> = null;
   private baseUrl = 'assets/config.json';
 
   constructor(private http: HttpClient) {
-
+    this.retrieveConfig();
   }
 
-  getConfig() {
+  private retrieveConfig(): void {
     this.config = this.http
       .get<ConfigModel>(this.baseUrl, { responseType: 'json' })
       .pipe(
-        catchError(this.handleError('getConfig', [])),
+        catchError(this.handleError('retrieveConfig', [])),
         tap(console.log));
+  }
 
+  getConfig() {
     return this.config;
   }
 

@@ -1,0 +1,33 @@
+:host {
+    align-items: center;
+}
+
+.row {
+    width: 100%;
+    margin-right: unset;
+    margin-left: unset;
+}
+
+#cards {
+    float: left;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.cardHeader {
+    padding: 1px;
+    word-break: break-all;
+    height: 100%;
+    vertical-align: top;
+    text-align: left;
+}
+
+.card {
+    padding: 1px;
+    word-break: break-all;
+    height: 100%;
+    vertical-align: top;
+    text-align: left;
+    width: 50%;
+}

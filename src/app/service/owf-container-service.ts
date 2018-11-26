@@ -4,7 +4,9 @@ import * as _ from 'lodash';
 
 import { OwfContainerModel } from '../models/owf-container-model';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root',
+  })
 export class OwfContainerService {
   container: OwfContainerModel = new OwfContainerModel();
 

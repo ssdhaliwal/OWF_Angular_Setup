@@ -7,6 +7,8 @@ import { TabViewModule } from 'primeng/tabview';
 import { CardModule } from 'primeng/card';
 import { PanelModule } from 'primeng/panel';
 
+import { SharedServicesModule } from '../shared-services.module';
+
 import { OwfCoreComponent } from '../owf-core/owf-core.component';
 import { OwfContainerComponent } from '../owf-core/owf-container/owf-container.component';
 import { AppConfigurationComponent } from '../owf-core/app-configuration/app-configuration.component';
@@ -36,7 +38,8 @@ const appRoutes: Routes = [
     FieldsetModule,
     TabViewModule,
     CardModule,
-    PanelModule
+    PanelModule,
+    SharedServicesModule
   ],
   exports: [OwfCoreComponent,
     OwfContainerComponent,
