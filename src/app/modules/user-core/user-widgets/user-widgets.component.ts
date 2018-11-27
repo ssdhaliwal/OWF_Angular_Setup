@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+
+import { Observable, Observer, of, Subject, EMPTY, Subscription } from 'rxjs';
+import { catchError, map, filter, switchMap, tap } from 'rxjs/operators';
 
 import { UserModel, UserWidgetAttribute, UserWidgetModel } from '../../../models/user-model';
 import { UserCoreService } from '../../../service/user-core.service';
@@ -9,9 +12,10 @@ import { UserCoreService } from '../../../service/user-core.service';
   templateUrl: './user-widgets.component.html',
   styleUrls: ['./user-widgets.component.css']
 })
-export class UserWidgetsComponent implements OnInit {
+export class UserWidgetsComponent implements OnInit, OnDestroy {
   userReady: boolean = false;
   widgets: UserWidgetModel[] = null;
+  widgetsSubscription: Subscription = null;
   userCoreService: UserCoreService;
   intvl1: number;
 
@@ -31,23 +35,16 @@ export class UserWidgetsComponent implements OnInit {
     let self = this;
 
     // retrieve the user summary info
-    self.widgets = self.userCoreService.getWidgets();
-    if (self.widgets === null) {
-      self.intvl1 = <any>setInterval(function() {
-        self.widgets = self.userCoreService.getWidgets();
+    self.widgetsSubscription = self.userCoreService.getWidgets()
+      .subscribe(widgetModel => {
+        self.widgets = widgetModel;
+        self.userReady = true;
+      });
 
-        // if (self.widgets !== null) {
-        self.userReady = true;
-        console.log('UserCore Service (Widgets) completed: ', self.widgets);
-        clearInterval(self.intvl1);
-        // }
-      }, 250);
-    } else {
-      if (self.widgets !== null) {
-        self.userReady = true;
-        console.log('UserCore Service (Widgets) completed-2: ', self.widgets);
-      }
-    }
+  }
+
+  ngOnDestroy() {
+    this.widgetsSubscription.unsubscribe();
   }
 
 }

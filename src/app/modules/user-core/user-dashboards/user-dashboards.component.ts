@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+
+import { Observable, Observer, of, Subject, EMPTY, Subscription } from 'rxjs';
+import { catchError, map, filter, switchMap, tap } from 'rxjs/operators';
 
 import { UserModel, UserDashboardAttribute, UserDashboardModel } from '../../../models/user-model';
 import { UserCoreService } from '../../../service/user-core.service';
@@ -9,14 +12,13 @@ import { UserCoreService } from '../../../service/user-core.service';
   templateUrl: './user-dashboards.component.html',
   styleUrls: ['./user-dashboards.component.css']
 })
-export class UserDashboardsComponent implements OnInit {
+export class UserDashboardsComponent implements OnInit, OnDestroy {
   userReady: boolean = false;
   user: UserModel = null;
+  userSubscription: Subscription = null;
   dashboards: UserDashboardModel = null;
+  dashboardSubscription: Subscription = null;
   userCoreService: UserCoreService;
-  intvl1: number;
-  intvl2: number;
-  intvl3: number;
 
   constructor(private route: ActivatedRoute, userCoreService: UserCoreService) {
     this.userCoreService = userCoreService;
@@ -33,45 +35,22 @@ export class UserDashboardsComponent implements OnInit {
     // wait until the user service is complete
     let self = this;
 
-    self.user = self.userCoreService.getUser();
-    if (self.user === null) {
-      self.intvl1 = <any>setInterval(function() {
-        self.user = self.userCoreService.getUser();
+    self.userSubscription = self.userCoreService.getUser()
+      .subscribe(userModal => {
+        self.user = userModal;
 
-        if (self.user !== null) {
-          clearInterval(self.intvl1);
-          console.log('UserCore Service (User) completed: ', self.user);
-        }
-      }, 250);
-    } else {
-      if (self.user !== null) {
-        console.log('UserCore Service (User) completed-2: ', self.user);
-      }
-    }
-
-    // retrieve the user summary info
-    self.intvl2 = <any>setInterval(function() {
-      if (self.user !== null) {
-        clearInterval(self.intvl2);
-
-        self.dashboards = self.userCoreService.getDashboard(self.user.id);
-        if (self.dashboards === null) {
-          self.intvl3 = <any>setInterval(function() {
-            self.dashboards = self.userCoreService.getDashboard(self.user.id);
-
-            if (self.dashboards !== null) {
-              self.userReady = true;
-              console.log('UserCore Service (Dashboards) completed: ', self.dashboards);
-              clearInterval(self.intvl3);
-            }
-          }, 250);
-        } else {
-          if (self.dashboards !== null) {
+        self.dashboardSubscription = self.userCoreService.getDashboard(self.user.id)
+          .subscribe(userDashboardModel => {
+            self.dashboards = userDashboardModel;
             self.userReady = true;
-            console.log('UserCore Service (Dashboards) completed-2: ', self.dashboards);
-          }
-        }
-      }
-    }, 250);
+
+            console.log('UserCore Service (Dashboards) completed: ', userDashboardModel);
+          });
+      });
+  }
+
+  ngOnDestroy() {
+    this.userSubscription.unsubscribe();
+    this.dashboardSubscription.unsubscribe();
   }
 }

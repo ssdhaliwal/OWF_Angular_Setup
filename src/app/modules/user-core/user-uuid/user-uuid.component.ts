@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+
+import { Observable, Observer, of, Subject, EMPTY, Subscription } from 'rxjs';
+import { catchError, map, filter, switchMap, tap } from 'rxjs/operators';
 
 import { UserModel } from '../../../models/user-model';
 import { UserCoreService } from '../../../service/user-core.service';
@@ -10,9 +13,10 @@ import { UserCoreService } from '../../../service/user-core.service';
   templateUrl: './user-uuid.component.html',
   styleUrls: ['./user-uuid.component.css']
 })
-export class UserUUIDComponent implements OnInit {
+export class UserUUIDComponent implements OnInit, OnDestroy {
   userReady: boolean = false;
   uuid: string = null;
+  uuidSubscription: Subscription = null;
   userCoreService: UserCoreService;
   intvl1: number;
 
@@ -30,22 +34,15 @@ export class UserUUIDComponent implements OnInit {
   ngOnInit() {
     let self = this;
 
-    self.uuid = self.userCoreService.getUUID();
-    if (self.uuid === null) {
-      self.intvl1 = <any>setInterval(function() {
-        self.uuid = self.userCoreService.getUUID();
-
-        if (self.uuid !== null) {
-          self.userReady = true;
-          console.log('UserCore Service (UUID) completed: ', self.uuid);
-          clearInterval(self.intvl1);
-        }
-      }, 250);
-    } else {
-      if (self.uuid !== null) {
+    self.uuidSubscription = self.userCoreService.getUUID()
+      .subscribe(uuidModal => {
+        self.uuid = uuidModal;
         self.userReady = true;
-        console.log('UserCore Service (UUID) completed-2: ', self.uuid);
-      }
-    }
+      });
   }
+
+  ngOnDestroy() {
+    this.uuidSubscription.unsubscribe();
+  }
+
 }

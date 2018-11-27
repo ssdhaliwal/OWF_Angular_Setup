@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, EMPTY } from 'rxjs';
+import { Observable, Observer, of, Subject, EMPTY } from 'rxjs';
 import { catchError, map, filter, switchMap, tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -16,6 +16,7 @@ import { ConfigService } from './config-service';
 import { OwfContainerService } from './owf-container-service';
 import { NullTemplateVisitor } from '@angular/compiler';
 import { dashCaseToCamelCase } from '@angular/animations/browser/src/util';
+import { EMPTY_ARRAY } from '@angular/core/src/view';
 
 declare var OWF: any;
 declare var Ozone: any;
@@ -24,12 +25,12 @@ declare var Ozone: any;
   providedIn: 'root'
 })
 export class UserCoreService {
-  user: UserModel = null;
-  uuid: string = null;
+  user: Observable<UserModel> = null;
+  uuid: Observable<string> = null;
   summary: Observable<UserSummaryModel[]> = null;
   groups: Observable<UserGroupModel[]> = null;
-  dashboards: UserDashboardModel = null;
-  widgets: UserWidgetModel[] = null;
+  dashboards: Observable<UserDashboardModel> = null;
+  widgets: Observable<UserWidgetModel[]> = null;
   owfUrl: string = 'https://localhost:8443/owf';
 
   constructor(private http: HttpClient,
@@ -45,63 +46,71 @@ export class UserCoreService {
     return this.owfContainerService.getContainer();
   }
 
-  getUser() {
+  getUser(): Observable<UserModel> {
     if (this.user === null) {
-      this.retrieveOwfUserInfo();
+      this.user = new Observable((observer) => {
+        this.retrieveOwfUserInfo(observer);
+      });
     }
 
     return this.user;
   }
 
-  private retrieveOwfUserInfo() {
+  private retrieveOwfUserInfo(observer) {
     Ozone.pref.PrefServer.getCurrentUser({
-      onSuccess: this.retrieveOwfUserSuccess.bind(this),
-      onFailure: this.retrieveOwfUserError.bind(this)
+      onSuccess: this.retrieveOwfUserSuccess.bind(this, observer),
+      onFailure: this.retrieveOwfUserError.bind(this, observer)
     });
   }
 
-  private retrieveOwfUserSuccess(userInfo) {
+  private retrieveOwfUserSuccess(observer, userInfo) {
     let user = new UserModel(userInfo.currentUserName, userInfo.currentUser,
       userInfo.currentUserPrevLogin, userInfo.currentId, userInfo.email);
 
     console.log('UserCore Service (retrieveOwfUserSuccess) completed: ', user);
-    this.user = user;
+    observer.next(user);
   }
 
-  private retrieveOwfUserError(error, status) {
+  private retrieveOwfUserError(observer, error, status) {
+    let user: UserModel = null;
     console.log('UserCoreService, retrieveOwfUserError()', error, status);
+    observer.next(user);
   }
 
-  getUUID() {
+  getUUID(): Observable<string> {
     if (this.uuid === null) {
-      this.retrieveUserUUID();
+      this.uuid = new Observable((observer) => {
+        this.retrieveUserUUID(observer);
+      });
     }
 
     return this.uuid;
   }
 
-  private retrieveUserUUID() {
+  private retrieveUserUUID(observer) {
     OWF.Preferences.getUserPreference({
       namespace: 'widget.base.user',
       name: 'uuid',
-      onSuccess: this.retrieveUserUUIDSuccess.bind(this),
-      onFailure: this.retrieveUserUUIDError.bind(this)
+      onSuccess: this.retrieveUserUUIDSuccess.bind(this, observer),
+      onFailure: this.retrieveUserUUIDError.bind(this, observer)
     });
   }
 
-  private retrieveUserUUIDSuccess(prefValue) {
+  private retrieveUserUUIDSuccess(observer, prefValue) {
     let uuid = JSON.parse(prefValue.value);
 
     console.log('UserCore Service (retrieveUserUUIDSuccess) completed: ', uuid);
-    this.uuid = uuid;
+    observer.next(uuid);
   }
 
-  private retrieveUserUUIDError(error, status) {
+  private retrieveUserUUIDError(observer, error, status) {
     console.log('UserCoreService, retrieveUserUUIDError()', error, status);
 
     if (status !== 404) {
-      this.uuid = OWF.Util.guid();
-      this.setUserUUID(this.uuid);
+      let uuid = OWF.Util.guid();
+      observer.next(uuid);
+
+      this.setUserUUID(uuid);
     }
   }
 
@@ -123,7 +132,7 @@ export class UserCoreService {
     console.log('UserCoreService, setUserUUIDError()', error, status);
   }
 
-  getUserSummary(id: string) {
+  getUserSummary(id: string): Observable<UserSummaryModel[]> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -140,7 +149,7 @@ export class UserCoreService {
     return this.summary;
   }
 
-  getUserGroups(id: string) {
+  getUserGroups(id: string): Observable<UserGroupModel[]> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -157,24 +166,26 @@ export class UserCoreService {
     return this.groups;
   }
 
-  getDashboard(userId: string) {
+  getDashboard(userId: string): Observable<UserDashboardModel> {
     if (this.dashboards === null) {
-      this.retrieveOwfUserDashboardInfo(userId);
+      this.dashboards = new Observable((observer) => {
+        this.retrieveOwfUserDashboardInfo(userId, observer);
+      });
     }
 
     return this.dashboards;
   }
 
-  private retrieveOwfUserDashboardInfo(userId: string) {
+  private retrieveOwfUserDashboardInfo(userId: string, observer) {
     let searchConfig = {
       user_id: userId,
-      onSuccess: this.retrieveOwfUserDashboardSuccess.bind(this),
-      onFailure: this.retrieveOwfUserDashboardError.bind(this)
+      onSuccess: this.retrieveOwfUserDashboardSuccess.bind(this, observer),
+      onFailure: this.retrieveOwfUserDashboardError.bind(this, observer)
     };
     OWF.Preferences.findDashboards(searchConfig);
   }
 
-  private retrieveOwfUserDashboardSuccess(dashboardInfo) {
+  private retrieveOwfUserDashboardSuccess(observer, dashboardInfo) {
     let dashboards: UserDashboardModel = null;
 
     dashboardInfo.data.forEach(function(value) {
@@ -192,39 +203,47 @@ export class UserCoreService {
     });
 
     console.log('UserCore Service (retrieveOwfUserDashboardSuccess) completed: ', dashboards);
-    this.dashboards = dashboards;
+    observer.next(dashboards);
   }
 
-  private retrieveOwfUserDashboardError(error, status) {
+  private retrieveOwfUserDashboardError(observer, error, status) {
+    let dashboards: UserDashboardModel = null;
+
     console.log('UserCoreService, retrieveOwfUserDashboardError()', error, status);
+    observer.next(dashboards);
   }
 
-  getWidgets() {
+  getWidgets(): Observable<UserWidgetModel[]> {
     if (this.widgets === null) {
-      this.retrieveOwfUserWidgetsInfo();
+      this.widgets = new Observable((observer) => {
+        this.retrieveOwfUserWidgetsInfo(observer);
+      });
     }
 
     return this.widgets;
   }
 
-  private retrieveOwfUserWidgetsInfo() {
+  private retrieveOwfUserWidgetsInfo(observer) {
     let searchConfig = {
       userOnly: true,
-      onSuccess: this.retrieveOwfUserWidgetsSuccess.bind(this),
-      onFailure: this.retrieveOwfUserWidgetsError.bind(this)
+      onSuccess: this.retrieveOwfUserWidgetsSuccess.bind(this, observer),
+      onFailure: this.retrieveOwfUserWidgetsError.bind(this, observer)
     };
     OWF.Preferences.findWidgets(searchConfig);
   }
 
-  private retrieveOwfUserWidgetsSuccess(widgetInfo) {
+  private retrieveOwfUserWidgetsSuccess(observer, widgetInfo) {
     let widgets = widgetInfo;
 
     console.log('UserCore Service (retrieveOwfUserWidgetsSuccess) completed: ', widgets);
-    this.widgets = widgets;
+    observer.next(widgets);
   }
 
-  private retrieveOwfUserWidgetsError(error, status) {
+  private retrieveOwfUserWidgetsError(observer, error, status) {
+    let widgets: UserWidgetModel[] = null;
+
     console.log('UserCoreService, retrieveOwfUserWidgetsError()', error, status);
+    observer.next(widgets);
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

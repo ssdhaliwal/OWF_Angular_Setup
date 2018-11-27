@@ -62,6 +62,9 @@
   ng serve --ssl true --ssl-cert server.crt --ssl-key server.key
 ```
 # history of changes
+26Nov/2018
+- updated all legacy callbacks to use obserable/subscription
+
 25Nov/2018
 - create singleton services for core items using shared-services.module.ts
 - working on owf function calls whcih use callbacks using timers (not optimal)

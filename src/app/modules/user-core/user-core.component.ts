@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+
+import { Observable, Observer, of, Subject, EMPTY, Subscription } from 'rxjs';
+import { catchError, map, filter, switchMap, tap } from 'rxjs/operators';
 
 import { UserModel } from '../../models/user-model';
 import { UserCoreService } from '../../service/user-core.service';
@@ -9,11 +12,11 @@ import { UserCoreService } from '../../service/user-core.service';
   templateUrl: './user-core.component.html',
   styleUrls: ['./user-core.component.css']
 })
-export class UserCoreComponent implements OnInit {
+export class UserCoreComponent implements OnInit, OnDestroy {
   userReady: boolean = false;
   user: UserModel = null;
+  userSubscription: Subscription = null;
   userCoreService: UserCoreService;
-  intvl1: number;
 
   constructor(userCoreService: UserCoreService) {
     this.userCoreService = userCoreService;
@@ -22,22 +25,16 @@ export class UserCoreComponent implements OnInit {
   ngOnInit() {
     let self = this;
 
-    self.user = self.userCoreService.getUser();
-    if (self.user === null) {
-      this.intvl1 = <any>setInterval(function() {
-        self.user = self.userCoreService.getUser();
-
-        if (self.user !== null) {
-          self.userReady = true;
-          console.log('UserCore Service (User) completed: ', self.user);
-          clearInterval(self.intvl1);
-        }
-      }, 250);
-    } else {
-      if (self.user !== null) {
+    self.userSubscription = self.userCoreService.getUser()
+      .subscribe(userModal => {
+        self.user = userModal;
         self.userReady = true;
-        console.log('UserCore Service (User) completed-2: ', self.user);
-      }
-    }
+        console.log('UserCore Service (User) completed: ', self.user);
+      });
   }
+
+  ngOnDestroy() {
+    this.userSubscription.unsubscribe();
+  }
+
 }
